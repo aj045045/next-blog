@@ -1,0 +1,92 @@
+generator nextAdmin {
+  provider = "next-admin-generator-prisma"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id        Int      @id @default(autoincrement())
+  name      String
+  username  String   @unique
+  password  String
+  email     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model User {
+  id        Int        @id @default(autoincrement())
+  name      String
+  username  String     @unique
+  password  String
+  email     String     @unique
+  bio       String?
+  image     String?
+  posts     Post[]
+  comments  Comment[]
+  reactions Reaction[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Post {
+  id        Int         @id @default(autoincrement())
+  title     String
+  content   String
+  slug      String      @unique // SEO-friendly URL
+  authorId  Int
+  author    User        @relation(fields: [authorId], references: [id])
+  tags      TagOnPost[]
+  comments  Comment[]
+  reactions Reaction[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Comment {
+  id       Int    @id @default(autoincrement())
+  content  String
+  authorId Int
+  postId   Int
+  author   User   @relation(fields: [authorId], references: [id])
+  post     Post   @relation(fields: [postId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Reaction {
+  id        Int          @id @default(autoincrement())
+  userId    Int
+  postId    Int
+  type      String @default("LIKE")
+  createdAt DateTime     @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+  post Post @relation(fields: [postId], references: [id])
+}
+
+model Tag {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+
+  posts TagOnPost[]
+}
+
+model TagOnPost {
+  postId Int
+  tagId  Int
+  post   Post @relation(fields: [postId], references: [id])
+  tag    Tag  @relation(fields: [tagId], references: [id])
+
+  @@id([postId, tagId]) // Composite primary key
+}
