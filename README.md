@@ -155,38 +155,52 @@ The project is built with the following technologies:
 
 ### ER Diagram
 
-![ERD Diagram](./public/prisma.svg)
+<div style="background-color: #f0f0f0; padding: 20px; text-align: center;">
+    <img src="./public/prisma.svg" alt="ERD Diagram" style="max-width: 80%; display: block; margin-left: auto; margin-right: auto;">
+</div>
+
+### Admin table
+
+| Field     | Type     | Attributes                     |
+| --------- | -------- | ------------------------------ |
+| id        | Int      | @id, @default(autoincrement()) |
+| name      | String   |                                |
+| username  | String   | @unique                        |
+| password  | String   |                                |
+| email     | String   | @unique                        |
+| createdAt | DateTime | @default(now())                |
+| updatedAt | DateTime | @updatedAt                     |
 
 ### User table
 
-| Field     | Type      | Attributes                     |
-| --------- | --------- | ------------------------------ |
-| id        | Int       | @id, @default(autoincrement()) |
-| name      | String    |
-| email     | String    | @unique                        |
-| bio       | String?   | Optional                       |
-| image     | String?   | Optional (Profile Picture URL) |
-| isAdmin   | Boolean   | @default(false)                |
-| posts     | Post[]    | Relation (One-to-Many)         |
-| comments  | Comment[] | Relation (One-to-Many)         |
-| likes     | Like[]    | Relation (One-to-Many)         |
-| createdAt | DateTime  | @default(now())                |
-| updatedAt | DateTime  | @updatedAt                     |
+| Field     | Type       | Attributes                     |
+| --------- | ---------- | ------------------------------ |
+| id        | Int        | @id, @default(autoincrement()) |
+| name      | String     |                                |
+| username  | String     | @unique                        |
+| password  | String     |                                |
+| email     | String     | @unique                        |
+| bio       | String?    | Optional                       |
+| image     | String?    | Optional (Profile Picture URL) |
+| posts     | Post[]     | Relation (One-to-Many)         |
+| comments  | Comment[]  | Relation (One-to-Many)         |
+| reactions | Reaction[] | Relation (One-to-Many)         |
+| createdAt | DateTime   | @default(now())                |
+| updatedAt | DateTime   | @updatedAt                     |
 
 ### Post table
 
 | Field     | Type        | Attributes                            |
 | --------- | ----------- | ------------------------------------- |
 | id        | Int         | @id, @default(autoincrement())        |
-| title     | String      |
-| content   | String      |
+| title     | String      |                                       |
+| content   | String      |                                       |
 | slug      | String      | @unique (SEO-friendly URL)            |
-| published | Boolean     | @default(false)                       |
 | authorId  | Int         | Foreign Key (User)                    |
 | author    | User        | Relation (Many-to-One)                |
 | tags      | TagOnPost[] | Relation (Many-to-Many via TagOnPost) |
 | comments  | Comment[]   | Relation (One-to-Many)                |
-| likes     | Like[]      | Relation (One-to-Many)                |
+| reactions | Reaction[]  | Relation (One-to-Many)                |
 | createdAt | DateTime    | @default(now())                       |
 | updatedAt | DateTime    | @updatedAt                            |
 
@@ -203,13 +217,14 @@ The project is built with the following technologies:
 | createdAt | DateTime | @default(now())                |
 | updatedAt | DateTime | @updatedAt                     |
 
-### Like table
+### Reaction table
 
 | Field     | Type     | Attributes                     |
 | --------- | -------- | ------------------------------ |
 | id        | Int      | @id, @default(autoincrement()) |
 | userId    | Int      | Foreign Key (User)             |
 | postId    | Int      | Foreign Key (Post)             |
+| type      | Boolean  | True = LIKE, False = DISLIKE   |
 | user      | User     | Relation (Many-to-One)         |
 | post      | Post     | Relation (Many-to-One)         |
 | createdAt | DateTime | @default(now())                |

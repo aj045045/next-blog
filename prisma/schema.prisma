@@ -65,14 +65,14 @@ model Comment {
 }
 
 model Reaction {
-  id        Int          @id @default(autoincrement())
-  userId    Int
-  postId    Int
-  type      String @default("LIKE")
-  createdAt DateTime     @default(now())
+  id     Int     @id @default(autoincrement())
+  userId Int
+  postId Int
+  type   Boolean
+  user   User    @relation(fields: [userId], references: [id])
+  post   Post    @relation(fields: [postId], references: [id])
 
-  user User @relation(fields: [userId], references: [id])
-  post Post @relation(fields: [postId], references: [id])
+  createdAt DateTime @default(now())
 }
 
 model Tag {
