@@ -2,8 +2,6 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import prisma from "@/lib/prisma";
 
-
-
 export const credentialsProvider = CredentialsProvider({
     name: "Credentials",
     credentials: {
@@ -26,7 +24,7 @@ export const credentialsProvider = CredentialsProvider({
             }
             return {
                 id: user.id.toString(),
-                name: user.name,
+                name: user.username,
                 email: user.email,
                 isAdmin: false,
                 image: user.image,
@@ -46,7 +44,7 @@ export const credentialsProvider = CredentialsProvider({
 
             return {
                 id: admin.id.toString(),
-                name: admin.name,
+                name: admin.username,
                 email: admin.email,
                 isAdmin: true,
             };

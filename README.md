@@ -141,6 +141,7 @@ The project is built with the following technologies:
    - `npm install -S @premieroctet/next-crud --legacy-peer-deps`
    - `npm install @prisma/client@5.22.0 prisma@5.22.0`
 9. **[SWR](https://swr.vercel.app/)**: React hooks for data fetching.
+   - `npm i swr --legacy-peer-deps`
 10. **[Cloudinary](https://cloudinary.com/documentation/node_quickstart)** : Cloudinary is a cloud service that manages images and videos
 11. **[React Hook Form](https://www.react-hook-form.com/)**: Form handling and validation.
 12. **[Zod](https://zod.dev/)**: Schema validation for forms and API payloads.
@@ -266,6 +267,9 @@ The project follows a clean and modular folder structure:
 │   ├── (user)  # Contain project route
 │       └── u   # User route
 │   └── admin   # Admin route
+├── components/ # The components to be store
+│   ├── ui      # The shadcn components
+│   └── custom  # The custom components
 ├── constant    # Reusable codes
 ├── emails       # Email components
 ├── font        # Font components
@@ -273,10 +277,9 @@ The project follows a clean and modular folder structure:
 ├── lib         # Reusable library configuration
 ├── prisma      # The prisma setting
 ├── public      # The assets folder
-├── components/ # The components to be store
-│   ├── ui      # The shadcn components
-│   └── custom  # The custom components
-└── store       # The zustand store
+├── store      # The zustand config for state management
+└── types       # The package configuration
+
 ```
 
 ---
