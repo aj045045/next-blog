@@ -10,6 +10,7 @@
     "email": "email dev"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.0.1",
     "@premieroctet/next-admin": "^7.5.1",
     "@premieroctet/next-crud": "^4.0.1",
     "@prisma/client": "^5.22.0",
@@ -26,9 +27,11 @@
     "next-themes": "^0.4.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-hook-form": "^7.56.1",
     "sonner": "^2.0.3",
     "swr": "^2.3.3",
-    "tailwind-merge": "^3.2.0"
+    "tailwind-merge": "^3.2.0",
+    "zod": "^3.24.3"
   },
   "devDependencies": {
     "@premieroctet/next-admin-generator-prisma": "^0.0.7",

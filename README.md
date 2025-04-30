@@ -150,11 +150,16 @@ The project is built with the following technologies:
     - `npm install next-cloudinary --legacy-peer-deps`
 
 11. **[React Hook Form](https://www.react-hook-form.com/)**: Form handling and validation.
+
+    - `npm install react-hook-form`
+
 12. **[Zod](https://zod.dev/)**: Schema validation for forms and API payloads.
+
+    - `npm install zod @hookform/resolvers`
+
 13. **[Zustand](https://zustand-demo.pmnd.rs/)**: Lightweight state management.
-14. **[Unsplash](https://unsplash.com/developers)**: The most powerful photo engine in the world.
-15. **[Novel](https://novel.sh/docs/introduction)** : The novel is a headless Notion-style WYSIWYG editor
-16. **[Nuqs](https://nuqs.47ng.com/)**: Type-safe search params state manager for React
+14. **[Novel](https://novel.sh/docs/introduction)** : The novel is a headless Notion-style WYSIWYG editor
+15. **[Nuqs](https://nuqs.47ng.com/)**: Type-safe search params state manager for React
 
 ---
 

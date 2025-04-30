@@ -1,4 +1,10 @@
-
+/**
+ * The function generates a random 7-character OTP (One Time Password) using a combination of digits,
+ * uppercase letters, and lowercase letters.
+ * @returns The function `OTPGeneratorUtil` returns a randomly generated One Time Password (OTP) of
+ * length 7 characters, consisting of a mix of digits, uppercase letters, and lowercase letters. The
+ * OTP is shuffled using the `shuffleString` function before being returned.
+ */
 export function OTPGeneratorUtil(): string {
 
     const length = 7;
