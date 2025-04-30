@@ -76,9 +76,10 @@ The `.env` file is used to configure environment-specific settings.
 - `EMAIL_USER`: Email address or username used to authenticate with the SMTP server.
 - `EMAIL_PASS`: Password or app-specific password for the SMTP server (Gmail).
 - `EMAIL_FROM`: The name and email address displayed in outgoing emails
-- `CLOUDINARY_CLOUD_NAME`: Your Cloudinary cloud name (found in your dashboard).
-- `CLOUDINARY_API_KEY`: Public API key for using Cloudinary's upload and transformation services.
-- `CLOUDINARY_API_SECRET`: Secret key used to authorize signed uploads or transformations.
+- `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME` : Your Cloudinary cloud name (to access keys visit [Tutorial](https://www.koladechris.com/blog/how-to-integrate-cloudinary-with-your-nextjs-project/)).
+- `NEXT_PUBLIC_CLOUDINARY_API_KEY`: Your api keys
+- `NEXT_PUBLIC_CLOUDINARY_API_SECRET`: Your api secret
+- `NEXT_PUBLIC_CLOUDINARY_PRESET_NAME` : This will be unsigned name
 - `UNSPLASH_ACCESS_KEY`: The unsplash developer access key
 - `UNSPLASH_SECRET_KEY`: The unsplash developer secret key for access unsplash image
 
@@ -102,9 +103,10 @@ EMAIL_PASS=your_email_password
 EMAIL_FROM="Your name <your_email@gmail.com>"
 
 # === Cloudinary (Media Storage) ===
-CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
-CLOUDINARY_API_KEY=your_cloudinary_api_key
-CLOUDINARY_API_SECRET=your_cloudinary_secret
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloud_name
+NEXT_PUBLIC_CLOUDINARY_API_KEY=your_api_key
+NEXT_PUBLIC_CLOUDINARY_API_SECRET=your_api_secret
+NEXT_PUBLIC_CLOUDINARY_PRESET_NAME=your_present_name
 
 # === Unsplash (Global media usage) ===
 UNSPLASH_ACCESS_KEY=your_unsplash_access_key_here
@@ -120,6 +122,7 @@ The project is built with the following technologies:
 1. **[Next.js](https://nextjs.org/)**: React framework for server-side rendering and static site generation.
    - `npx create-next-app@latest .`
 2. **[Tailwind CSS](https://tailwindcss.com/)**: Utility-first CSS framework for styling.
+   - `npm install lucide-react`
 3. **[Prisma SQLite](https://www.prisma.io/docs/orm/overview/databases/sqlite)**: ORM for database management
 
    - `npm install prisma --save-dev`
@@ -142,7 +145,10 @@ The project is built with the following technologies:
    - `npm install @prisma/client@5.22.0 prisma@5.22.0`
 9. **[SWR](https://swr.vercel.app/)**: React hooks for data fetching.
    - `npm i swr --legacy-peer-deps`
-10. **[Cloudinary](https://cloudinary.com/documentation/node_quickstart)** : Cloudinary is a cloud service that manages images and videos
+10. **[Next Cloudinary](https://next.cloudinary.dev/)** : Cloudinary is a cloud service that manages images and videos
+
+    - `npm install next-cloudinary --legacy-peer-deps`
+
 11. **[React Hook Form](https://www.react-hook-form.com/)**: Form handling and validation.
 12. **[Zod](https://zod.dev/)**: Schema validation for forms and API payloads.
 13. **[Zustand](https://zustand-demo.pmnd.rs/)**: Lightweight state management.

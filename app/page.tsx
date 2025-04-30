@@ -1,4 +1,5 @@
 "use client"
+import { CloudinaryUploader } from "@/components/custom/cloudinary-uploader";
 import useSWR from "swr";
 
 interface Product {
@@ -17,27 +18,42 @@ export default function HomePage() {
   if (error) return <div>Failed to load products.</div>;
 
   return (
-    <main className="product-list p-8">
-      <h1 className="text-3xl font-bold mb-8">All Products</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {products?.map((product) => (
-          <div
-            key={product.id}
-            className="border border-green-200/40 bg-green-950/40 p-5 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200"
-          >
-            <img
-              src={product.image}
-              alt={product.title}
-              className="w-full h-48 mb-4 rounded-lg object-center"
-            />
-            <h2 className="text-lg font-semibold mb-2 text-center">{product.title}</h2>
-            <p className="text-green-200/80 font-bold text-center">${product.price}</p>
-            <p className="text-sm text-green-200/60 mt-2">
-              {product.description.substring(0, 100)}...
-            </p>
-          </div>
-        ))}
-      </div>
-    </main>
+    <>
+      {/* <CldOgImage
+        alt="logo test"
+        width={500}
+        height={500}
+        src="vprveumh1v33kzkhyjmp"
+      /> */}
+      {/* <CldImage
+        alt="text"
+        width={500}
+        height={500}
+        src="vprveumh1v33kzkhyjmp"
+      /> */}
+      {/* <CloudinaryUploader /> */}
+      <main className="p-8 product-list">
+        <h1 className="mb-8 text-3xl font-bold">All Products</h1>
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          {products?.map((product) => (
+            <div
+              key={product.id}
+              className="p-5 transition-shadow duration-200 border rounded-lg shadow-sm border-green-200/40 bg-green-950/40 hover:shadow-md"
+            >
+              <img
+                src={product.image}
+                alt={product.title}
+                className="object-center w-full h-48 mb-4 rounded-lg"
+              />
+              <h2 className="mb-2 text-lg font-semibold text-center">{product.title}</h2>
+              <p className="font-bold text-center text-green-200/80">${product.price}</p>
+              <p className="mt-2 text-sm text-green-200/60">
+                {product.description.substring(0, 100)}...
+              </p>
+            </div>
+          ))}
+        </div>
+      </main>
+    </>
   );
 }

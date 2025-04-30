@@ -40,10 +40,6 @@ export function RootLayout({
                 const message = error instanceof Error ? error.message : 'An unknown error occurred';
                 toast.error(message);
               },
-              onSuccess: () => {
-                toast.success('Data loaded successfully!');
-                setTimeout(() => toast.dismiss(), 2000);
-              },
             }}
           >
             {children}
