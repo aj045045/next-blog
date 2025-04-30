@@ -168,7 +168,7 @@ The project is built with the following technologies:
 ### ER Diagram
 
 <div style="background-color: #f0f0f0; padding: 20px; text-align: center;">
-    <img src="./public/prisma.svg" alt="ERD Diagram" style="max-width: 80%; display: block; margin-left: auto; margin-right: auto;">
+    <img src="./public/prisma.svg" alt="ERD Diagram" style="display: block; margin-left: auto; margin-right: auto;">
 </div>
 
 ### Admin table
@@ -210,6 +210,8 @@ The project is built with the following technologies:
 | slug      | String      | @unique (SEO-friendly URL)            |
 | authorId  | Int         | Foreign Key (User)                    |
 | author    | User        | Relation (Many-to-One)                |
+| imageId   | Int         | Foreign Key (User)                    |
+| image     | Image       | Relation (Many-to-One)                |
 | tags      | TagOnPost[] | Relation (Many-to-Many via TagOnPost) |
 | comments  | Comment[]   | Relation (One-to-Many)                |
 | reactions | Reaction[]  | Relation (One-to-Many)                |
@@ -258,6 +260,16 @@ The project is built with the following technologies:
 | post   | Post                                 | Relation (Many-to-One) |
 | tag    | Tag                                  | Relation (Many-to-One) |
 |        | @@id([postId, tagId]) (Composite PK) |                        |
+
+### Image table
+
+| Field     | Type     | Attributes                        |
+| --------- | -------- | --------------------------------- |
+| id        | Int      | @id,@default(autoincrement())     |
+| imageId   | String   | The public id of cloudinary image |
+| altText   | String?  |                                   |
+| createdAt | DateTime | @default(now())                   |
+| posts     | Post     | Relation (Many-to-One)            |
 
 ---
 

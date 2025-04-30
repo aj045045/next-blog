@@ -41,9 +41,11 @@ model Post {
   id        Int         @id @default(autoincrement())
   title     String
   content   String
-  slug      String      @unique // SEO-friendly URL
+  slug      String      @unique
   authorId  Int
   author    User        @relation(fields: [authorId], references: [id])
+  imageId   Int
+  image     Image       @relation(fields: [imageId], references: [id])
   tags      TagOnPost[]
   comments  Comment[]
   reactions Reaction[]
@@ -89,4 +91,13 @@ model TagOnPost {
   tag    Tag  @relation(fields: [tagId], references: [id])
 
   @@id([postId, tagId]) // Composite primary key
+}
+
+model Image {
+  id        Int      @id @default(autoincrement())
+  imageId   String
+  altText   String?
+  createdAt DateTime @default(now())
+
+  posts Post[]
 }

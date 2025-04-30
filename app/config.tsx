@@ -5,6 +5,7 @@ import { SessionProvider } from "next-auth/react";
 import { SWRConfig } from 'swr';
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
+import { usePathname } from "next/navigation";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,8 +22,10 @@ export function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const pathname = usePathname();
+  const isAdminRoute = pathname.startsWith('/admin');
   return (
-    <html lang="en" className="dark" style={{ colorScheme: "dark" }}>
+    <html lang="en" className={isAdminRoute ? "dark" : "light"} style={{ colorScheme: isAdminRoute ? "dark" : "light" }}>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <SessionProvider>
           <SWRConfig

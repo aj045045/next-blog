@@ -10,28 +10,28 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        darkNextadmin: {
+        darkNextAdmin: {
           background: {
-            DEFAULT: "#052e16",
-            light: "#064e3b",
-            hover: "#065f46",
+            DEFAULT: "#fafafa", // light gray
+            light: "#ffffff",   // white
+            hover: "#f3f4f6",   // soft gray for hover
           },
           text: {
-            DEFAULT: "#d1fae5",
-            muted: "#6ee7b7",
+            DEFAULT: "#1e293b", // slate-800 for dark readable text
+            muted: "#6b7280",   // gray-500
           },
-          border: "#047857",
+          border: "#e5e7eb",     // gray-200
           menu: {
-            background: "#052e16",
-            active: "#047857",
-            hover: "#065f46",
+            background: "#ffffff", // white
+            active: "#e0f2fe",     // light blue
+            hover: "#f1f5f9",      // blue-gray hover
           },
           card: {
-            background: "#064e3b",
-            shadow: "rgba(0, 0, 0, 0.1)"
+            background: "#ffffff",               // white card
+            shadow: "rgba(0, 0, 0, 0.05)"         // lighter shadow
           },
           brand: {
-            DEFAULT: "#047857",
+            DEFAULT: "#3b82f6",   // blue-500 (primary accent)
           }
         },
       },
