@@ -1,5 +1,6 @@
 "use client"
-import { CloudinaryUploader } from "@/components/custom/cloudinary-uploader";
+import { CloudinaryUploader } from "@/components/cloudinary-uploader";
+import { NavbarComp } from "@/components/navbar";
 import useSWR from "swr";
 
 interface Product {
@@ -19,19 +20,7 @@ export default function HomePage() {
 
   return (
     <>
-      {/* <CldOgImage
-        alt="logo test"
-        width={500}
-        height={500}
-        src="vprveumh1v33kzkhyjmp"
-      /> */}
-      {/* <CldImage
-        alt="text"
-        width={500}
-        height={500}
-        src="vprveumh1v33kzkhyjmp"
-      /> */}
-      {/* <CloudinaryUploader /> */}
+      <NavbarComp />
       <main className="p-8 product-list">
         <h1 className="mb-8 text-3xl font-bold">All Products</h1>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">

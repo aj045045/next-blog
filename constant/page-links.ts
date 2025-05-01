@@ -1,14 +1,14 @@
 export const pageLinks = {
-    home: '/home',
+    home: '/',
     about: '/about',
+    author: '/author',
+    blog: '/blog',
+    search: '/search',
+    tag: '/tag',
     contact: '/contact',
     sign_up: '/sign-up',
     login: '/login',
     forget_password: '/forget-password',
-    dashboard: '/u/dashboard',
-    profile: '/profile',
-    settings: '/settings',
-    user_profile: '/u/profile',
     social: {
         twitter: "https://twitter.com",
         instagram: "https://instagram.com",
@@ -18,13 +18,13 @@ export const pageLinks = {
     },
     admin: {
         dashboard: '/admin/dashboard',
-        users: '/admin/users',
-        reports: '/admin/reports',
-        settings: '/admin/settings',
     },
     user: {
+        dashboard: '/u/dashboard',
         profile: '/u/profile',
-        transaction: '/u/transaction',
-        fraudDetection: '/u/fraud-detection',
-    }
+        posts: '/u/posts',
+        bookmarks: '/u/bookmarks',
+        settings: '/u/settings'
+    },
+
 }

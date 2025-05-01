@@ -15,43 +15,25 @@ import { OTPGeneratorUtil } from "@/lib/otp-generator"
 import { OTPEmailProps } from "@/interface/email"
 import { signUpFormSchema } from "@/interface/form"
 import * as z from "zod"
+import { User } from "lucide-react"
+import { useZodForm } from "@/lib/use-zod-form"
 
 
 export function SignUpForm() {
     const [sendOTP, setSendOTP] = useState(false);
-    const form = useForm<z.infer<typeof signUpFormSchema>>({
-        resolver: zodResolver(signUpFormSchema),
-        defaultValues: {
-            user_name: "",
-            email_id: "",
-            password: "",
-            pin: "",
-            sendPin: ""
-        }
-    })
-
-    const languages = [
-        {
-            label: 'Savings',
-            value: 'SAVINGS'
-        },
-        {
-            label: 'Current',
-            value: 'CURRENT'
-        }
-    ];
-    const showButton = form.watch("email_id")?.length > 12 ? false : true;
+    const form = useZodForm(signUpFormSchema, { defaultValues: { email: "", name: "", password: "", username: "", sendPin: "", pin: "" } });
+    const showButton = form.watch("email")?.length > 12 ? false : true;
 
     const sendOTPButton = async () => {
-        const email = form.watch("email_id").trim();
+        const email = form.watch("email").trim();
         if (!email) {
             toast.error("Please enter a valid email address.");
             return;
         }
         const sendPin = OTPGeneratorUtil();
-        setSendOTP(true);
         form.setValue("sendPin", sendPin);
-        const payload: OTPEmailProps = { name: form.getValues("user_name"), emailId: email, code: sendPin, task: "Sign Up" };
+        setSendOTP(true);
+        const payload: OTPEmailProps = { name: form.getValues("name"), emailId: email, code: sendPin, task: "Sign Up" };
         UtilityHandler.onSubmitPost('/api/emails/otp', payload, `An OTP is being sent to ${email}. Please check your email.`, 'Please check your email for the OTP and enter it to proceed');
     };
 
@@ -69,18 +51,28 @@ export function SignUpForm() {
                         </Link>
                     </div>
                 </div>
+                {/* NOTE Username */}
                 <FormField
                     control={form.control}
-                    name="user_name"
+                    name="username"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Username<span className="text-red-500">*</span></FormLabel>
+                            <FormLabel>
+                                Username <span className="text-red-500">*</span>
+                            </FormLabel>
                             <FormControl>
-                                <Input
-                                    placeholder="John Wick"
-                                    required
-                                    type="text"
-                                    {...field} />
+                                <div className="relative">
+                                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+                                        <User className="h-4 w-4" />
+                                    </span>
+                                    <Input
+                                        placeholder="John Wick"
+                                        required
+                                        type="text"
+                                        className="pl-10" // Add padding to the left for the icon
+                                        {...field}
+                                    />
+                                </div>
                             </FormControl>
                             <FormDescription>Enter your user name</FormDescription>
                             <FormMessage />
@@ -88,9 +80,10 @@ export function SignUpForm() {
                     )}
                 />
 
+                {/* NOTE Email */}
                 <FormField
                     control={form.control}
-                    name="email_id"
+                    name="email"
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>Email Address<span className="text-red-500">*</span></FormLabel>
@@ -107,6 +100,7 @@ export function SignUpForm() {
                     )}
                 />
 
+                {/* NOTE Password */}
                 <FormField
                     control={form.control}
                     name="password"

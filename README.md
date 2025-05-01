@@ -71,8 +71,6 @@ The `.env` file is used to configure environment-specific settings.
 - `PORT`: The port on which the Next.js server will run (default: 3000).
 - `NEXTAUTH_URL`: Tells NextAuth what the base URL of your app.
 - `NEXTAUTH_SECRET`: Secret used to encrypt session tokens, JWTs, and cookies (by running `openssl rand -base64 32`).
-- `EMAIL_SERVER`: Hostname of the SMTP server.
-- `EMAIL_PORT`: SMTP port used to send emails.
 - `EMAIL_USER`: Email address or username used to authenticate with the SMTP server.
 - `EMAIL_PASS`: Password or app-specific password for the SMTP server (Gmail).
 - `EMAIL_FROM`: The name and email address displayed in outgoing emails
@@ -96,8 +94,6 @@ NEXTAUTH_URL=http://localhost:3000
 NEXTAUTH_SECRET=your_auth_secret
 
 # === Nodemailer (Email) ===
-EMAIL_SERVER=smtp.gmail.com
-EMAIL_PORT=587
 EMAIL_USER=your_email@gmail.com
 EMAIL_PASS=your_email_password
 EMAIL_FROM="Your name <your_email@gmail.com>"
@@ -137,6 +133,8 @@ The project is built with the following technologies:
 6. **[React email](https://react.email/)**: The next generation of writing emails
    - `npm install react-email -D -E`
    - `npm install @react-email/components -E`
+   - `npm i nodemailer`
+   - `npm i --save-dev @types/nodemailer`
 7. **[NextAuth](https://next-auth.js.org/)**: Authentication library for secure user login.
    - `npm install next-auth`
    - `npm install bcryptjs`
@@ -270,6 +268,15 @@ The project is built with the following technologies:
 | altText   | String?  |                                   |
 | createdAt | DateTime | @default(now())                   |
 | posts     | Post     | Relation (Many-to-One)            |
+
+### Bookmark table
+
+| Field  | Type | Attributes             |
+| ------ | ---- | ---------------------- |
+| userId | Int  | Foreign key            |
+| postId | Int  | Foreign key            |
+| post   | Post | Relation (Many-to-One) |
+| user   | User | Relation (Many-to-One) |
 
 ---
 

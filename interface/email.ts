@@ -4,3 +4,9 @@ export interface OTPEmailProps {
     code: string;
     emailId: string;
 }
+
+export interface WelcomeEmailProps {
+    name: string;
+    email: string;
+    createdAt: string;
+}

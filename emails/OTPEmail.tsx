@@ -7,19 +7,19 @@ export default function OTPEmailComp(props: OTPEmailProps) {
     return (
         <Html>
             <Head />
-            <Preview>SZhoes Email Verification</Preview>
+            <Preview>Blog Email Verification</Preview>
             <Tailwind>
                 <Body className="bg-neutral-200 py-5 select-none">
                     <Container className="items-center bg-white rounded-md flex text-center flex-col font-sans ">
                         <Section>
-                            <Img alt="Logo image" src="https://res.cloudinary.com/dvvaf3oih/image/upload/v1732465488/icon_hgrz7f.png" className="w-28 p-2 my-2 mx-auto" />
+                            <Img alt="Logo image" src="https://avatars.githubusercontent.com/u/113114943?v=4" className="w-28 p-2 my-2 mx-auto" />
                         </Section>
                         <Section>
                             <Heading className="text-3xl">Verify your email</Heading>
-                            <Text className="text-2xl" >Hi {props.name}</Text>
+                            <Text className="text-2xl" >Hi {props.emailId}</Text>
                         </Section>
                         <Section>
-                            <Text>Use this code below to {props.task} in  SZhoes</Text>
+                            <Text>Hello {props.name}, Use this code below to {props.task} in blog subscription</Text>
                         </Section>
                         <Section className="px-5">
                             <Text className="bg-green-400 p-3 text-center text-4xl select-text">{props.code}</Text>

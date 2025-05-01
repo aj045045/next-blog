@@ -26,7 +26,7 @@ export function RootLayout({
   const isAdminRoute = pathname.startsWith('/admin');
   return (
     <html lang="en" className={isAdminRoute ? "dark" : "light"} style={{ colorScheme: isAdminRoute ? "dark" : "light" }}>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased ${!isAdminRoute ? "bg-green-50" : ""}`}>
         <SessionProvider>
           <SWRConfig
             value={{
@@ -43,8 +43,7 @@ export function RootLayout({
                 const message = error instanceof Error ? error.message : 'An unknown error occurred';
                 toast.error(message);
               },
-            }}
-          >
+            }}>
             {children}
             <Toaster position="top-right" />
           </SWRConfig>

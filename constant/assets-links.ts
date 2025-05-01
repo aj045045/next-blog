@@ -1,3 +1,6 @@
+/* This block of code is defining an object named `assetsLinks` in TypeScript. The object contains
+various properties such as `logo`, `sign_up`, `login`, `forget_password`, and `social`, each with
+their own nested properties like `src` (source URL) and `alt` (alternative text) for images. */
 export const assetsLinks = {
     logo: {
         src: '/logo.svg',
