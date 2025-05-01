@@ -7,9 +7,8 @@ export async function POST(request: Request) {
     try {
         const { name, code, emailId, task }: OTPEmailProps = await request.json();
         const emailHtml = await render(OTPEmailComp({ name, task, code, emailId }));
-
         const options = {
-            from: process.env.EM,
+            from: process.env.EMAIL_USER,
             to: emailId,
             subject: `App: ${task} Email Id Verification`,
             html: emailHtml,

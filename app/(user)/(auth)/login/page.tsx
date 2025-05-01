@@ -2,8 +2,8 @@ import { loginFormScheme } from "@/interface/form";
 import { useZodForm } from "@/lib/use-zod-form";
 import { z } from "zod";
 
-export function useLoginForm() {
-    const { register, handleSubmit, formState: { errors }, } = useZodForm(loginFormScheme, { defaultValues: { email_id: "", password: "" } });
+export default function useLoginForm() {
+    // const { register, handleSubmit, formState: { errors }, } = useZodForm(loginFormScheme, { defaultValues: { email_id: "", password: "" } });
     return (
         <div>
             <h1>Login</h1>

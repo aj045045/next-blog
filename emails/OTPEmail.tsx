@@ -1,7 +1,6 @@
 import { OTPEmailProps } from "@/interface/email";
 import { OTPGeneratorUtil } from "@/lib/otp-generator";
-import { Html, Head, Body, Tailwind, Text, Section, Img, Preview, Container, Heading, Hr } from "@react-email/components"
-
+import { Html, Head, Body, Tailwind, Text, Section, Img, Preview, Container, Heading, Hr, Button } from "@react-email/components";
 
 export default function OTPEmailComp(props: OTPEmailProps) {
     return (
@@ -9,29 +8,39 @@ export default function OTPEmailComp(props: OTPEmailProps) {
             <Head />
             <Preview>Blog Email Verification</Preview>
             <Tailwind>
-                <Body className="bg-neutral-200 py-5 select-none">
-                    <Container className="items-center bg-white rounded-md flex text-center flex-col font-sans ">
+                <Body className="bg-gray-50 py-6 select-none">
+                    <Container className="bg-white max-w-xl mx-auto rounded-lg shadow-lg p-6 text-center font-sans">
                         <Section>
-                            <Img alt="Logo image" src="https://avatars.githubusercontent.com/u/113114943?v=4" className="w-28 p-2 my-2 mx-auto" />
+                            <Img
+                                alt="Logo"
+                                src="https://avatars.githubusercontent.com/u/113114943?v=4"
+                                className="w-32 h-32 rounded-full mx-auto mb-4"
+                            />
                         </Section>
                         <Section>
-                            <Heading className="text-3xl">Verify your email</Heading>
-                            <Text className="text-2xl" >Hi {props.emailId}</Text>
+                            <Heading className="text-3xl font-semibold text-gray-800 mb-2">Verify Your Email Address</Heading>
+                            <Text className="text-lg text-gray-600 mb-4">Hi {props.name},</Text>
                         </Section>
                         <Section>
-                            <Text>Hello {props.name}, Use this code below to {props.task} in blog subscription</Text>
+                            <Text className="text-base text-gray-700 mb-3">
+                                We received a request to {props.task} your email address: <strong>{props.emailId}</strong>.
+                            </Text>
+                            <Text className="text-base text-gray-700 mb-6">Use the code below to complete the process:</Text>
                         </Section>
-                        <Section className="px-5">
-                            <Text className="bg-green-400 p-3 text-center text-4xl select-text">{props.code}</Text>
-                            <Text>The code will expire in 5 minutes</Text>
+                        <Section className="bg-green-200 rounded-lg py-4 mb-4">
+                            <Text className="text-4xl font-bold text-green-700">{props.code}</Text>
+                            <Text className="text-sm text-gray-500 mt-2">This code will expire in 5 minutes.</Text>
                         </Section>
                         <Section>
-                            <Text>This code will securely {props.task} using</Text>
+                            <Text className="text-base text-gray-700 mb-4">
+                                If you did not request this action, please disregard this email. It’s safe to ignore.
+                            </Text>
+                            <Text className="text-base text-gray-700">This code will securely {props.task} your account using:</Text>
                             <Text className="text-blue-500">{props.emailId}</Text>
                         </Section>
-                        <Section>
-                            <Hr />
-                            <Text className="text-neutral-500">If you didn&apos;t request this email, there&apos;s nothing to worry about, you can safely ignore it.</Text>
+                        <Section className="mt-6">
+                            <Hr className="border-gray-300" />
+                            <Text className="text-gray-500 text-sm mt-4">If you didn’t request this action, just ignore this message.</Text>
                         </Section>
                     </Container>
                 </Body>
@@ -40,10 +49,9 @@ export default function OTPEmailComp(props: OTPEmailProps) {
     );
 }
 
-
 OTPEmailComp.PreviewProps = {
     name: "Ansh Yadav",
     task: "Register",
     code: OTPGeneratorUtil(),
     emailId: "aj045045@gmail.com"
-}
+};

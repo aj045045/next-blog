@@ -48,15 +48,28 @@ Follow these steps to set up and run the project locally:
    - Add the required environment variables (see [Environment Variables](#environment-variables)).
 
 4. **Run the development server**:
+
    ```bash
    npm run dev
    ```
+
    The app will be available at `http://localhost:3000` (or the port specified in `.env`).
+
 5. **Run the email server (Optional)**:
+
    ```
    npm run email
    ```
+
    The email development app will be available at port `http://localhost:3000` (or the port specified in `.env`).
+
+6. **Run the prisma studio to view tables**:
+
+   ```
+   npx prisma studio
+   ```
+
+   This will run a prisma studio in table view format
 
 ---
 
@@ -78,8 +91,6 @@ The `.env` file is used to configure environment-specific settings.
 - `NEXT_PUBLIC_CLOUDINARY_API_KEY`: Your api keys
 - `NEXT_PUBLIC_CLOUDINARY_API_SECRET`: Your api secret
 - `NEXT_PUBLIC_CLOUDINARY_PRESET_NAME` : This will be unsigned name
-- `UNSPLASH_ACCESS_KEY`: The unsplash developer access key
-- `UNSPLASH_SECRET_KEY`: The unsplash developer secret key for access unsplash image
 
 ### Example `.env`
 
@@ -103,10 +114,6 @@ NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloud_name
 NEXT_PUBLIC_CLOUDINARY_API_KEY=your_api_key
 NEXT_PUBLIC_CLOUDINARY_API_SECRET=your_api_secret
 NEXT_PUBLIC_CLOUDINARY_PRESET_NAME=your_present_name
-
-# === Unsplash (Global media usage) ===
-UNSPLASH_ACCESS_KEY=your_unsplash_access_key_here
-UNSPLASH_SECRET_KEY=your_unsplash_secret_key_here
 ```
 
 ---

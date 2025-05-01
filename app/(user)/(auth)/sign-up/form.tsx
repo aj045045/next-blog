@@ -17,6 +17,7 @@ import { signUpFormSchema } from "@/interface/form"
 import * as z from "zod"
 import { User } from "lucide-react"
 import { useZodForm } from "@/lib/use-zod-form"
+import bcrypt from "bcryptjs"
 
 
 export function SignUpForm() {
@@ -24,6 +25,15 @@ export function SignUpForm() {
     const form = useZodForm(signUpFormSchema, { defaultValues: { email: "", name: "", password: "", username: "", sendPin: "", pin: "" } });
     const showButton = form.watch("email")?.length > 12 ? false : true;
 
+
+    // NOTE hashing password
+    const hashPassword = async (plainPassword: string): Promise<string> => {
+        const salt = await bcrypt.genSalt(10); // 10 is a good balance
+        const hash = await bcrypt.hash(plainPassword, salt);
+        return hash;
+    };
+
+    // NOTE OTP send button
     const sendOTPButton = async () => {
         const email = form.watch("email").trim();
         if (!email) {
@@ -34,13 +44,26 @@ export function SignUpForm() {
         form.setValue("sendPin", sendPin);
         setSendOTP(true);
         const payload: OTPEmailProps = { name: form.getValues("name"), emailId: email, code: sendPin, task: "Sign Up" };
-        UtilityHandler.onSubmitPost('/api/emails/otp', payload, `An OTP is being sent to ${email}. Please check your email.`, 'Please check your email for the OTP and enter it to proceed');
+        await UtilityHandler.onSubmitPost('/api/emails/otp', payload, `An OTP is being sent to ${email}. Please check your email.`, 'Please check your email for the OTP and enter it to proceed');
     };
+
+
+    // NOTE Signup submission button
+    const handleSignUpSubmit = async (payload: z.infer<typeof signUpFormSchema>) => {
+        const { email, name, password, username } = payload;
+        const filterPayload = { name, username, email, password: await hashPassword(password) };
+        await UtilityHandler.onSubmitPost(
+            '/api/crud/users',
+            filterPayload,
+            'Handling Sign-Up Form Submission',
+            'You have successfully signed up. Try logging in now.'
+        );
+    };
+
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit((payload) =>
-                UtilityHandler.onSubmitPost('/api/auth', payload, `Handling Sign-Up Form Submission`, 'You have successfully sign up try to login now'))}
+            <form onSubmit={form.handleSubmit(handleSignUpSubmit)}
                 className="row-span-2 py-10 mx-auto space-y-8 text-green-950">
                 <div>
                     <div className="font-sans text-3xl">Sign Up</div>
@@ -51,6 +74,27 @@ export function SignUpForm() {
                         </Link>
                     </div>
                 </div>
+
+                {/* NOTE Name */}
+                <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Full name<span className="text-red-500">*</span></FormLabel>
+                            <FormControl>
+                                <Input
+                                    required
+                                    placeholder="Jardani Jovanovich (John Wick)"
+                                    type="email"
+                                    {...field} />
+                            </FormControl>
+                            <FormDescription>Enter your full name</FormDescription>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
                 {/* NOTE Username */}
                 <FormField
                     control={form.control}
@@ -66,7 +110,7 @@ export function SignUpForm() {
                                         <User className="h-4 w-4" />
                                     </span>
                                     <Input
-                                        placeholder="John Wick"
+                                        placeholder="johnwick"
                                         required
                                         type="text"
                                         className="pl-10" // Add padding to the left for the icon
@@ -90,7 +134,7 @@ export function SignUpForm() {
                             <FormControl>
                                 <Input
                                     required
-                                    placeholder="user@example.com"
+                                    placeholder="johnwick@example.com"
                                     type="email"
                                     {...field} />
                             </FormControl>
