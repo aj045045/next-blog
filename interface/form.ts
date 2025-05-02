@@ -22,7 +22,8 @@ export const loginFormScheme = z.object({
 /* This block of code is defining a schema using Zod for a forget password form. It specifies the
 validation rules for each field in the form: */
 export const forgetPasswordFormScheme = z.object({
-    email_id: z.string().email(),
+    id: z.number().nullable(),
+    email: z.string().email(),
     password: z.string().min(6),
     confirmPassword: z.string().min(6),
     pin: z.string().min(6, {

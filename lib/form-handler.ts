@@ -12,6 +12,40 @@ interface FormResponse {
 toast notifications in TypeScript. */
 export class UtilityHandler {
 
+    /**
+     * Sends a GET request to the given URL and returns the parsed JSON response.
+     * Displays toast notifications for loading, success, and error states.
+     * @param {string} url - The URL to fetch data from.
+     * @param {string} [loadingText=Loading] - Message shown while the request is in progress.
+     * @param {string} [successText=Loaded] - Message shown when the data is successfully fetched.
+     * @returns {Promise<T | null>} - The parsed JSON response, or null if there was an error.
+     */
+    static async onSubmitGet<T>(
+        url: string,
+        loadingText: string = 'Loading...',
+    ): Promise<T | null> {
+        const toastId = toast.loading(loadingText);
+        try {
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            const result = await response.json();
+            if (!response.ok) {
+                toast.error(result.message || 'Failed to fetch data.');
+                return null;
+            }
+            return result as T;
+        } catch (error) {
+            toast.error('An error occurred: ' + (error instanceof Error ? error.message : error));
+            return null;
+        } finally {
+            toast.dismiss(toastId);
+        }
+    }
+
 
     /**
      * The function `onSubmitPost` is an asynchronous function in TypeScript that handles submitting data

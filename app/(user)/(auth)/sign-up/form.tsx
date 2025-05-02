@@ -1,7 +1,5 @@
 "use client"
 import { toast } from "sonner"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
@@ -17,7 +15,8 @@ import { signUpFormSchema } from "@/interface/form"
 import * as z from "zod"
 import { User } from "lucide-react"
 import { useZodForm } from "@/lib/use-zod-form"
-import bcrypt from "bcryptjs"
+import { redirect } from "next/navigation"
+import { hashPassword } from "@/lib/utils"
 
 
 export function SignUpForm() {
@@ -25,32 +24,72 @@ export function SignUpForm() {
     const form = useZodForm(signUpFormSchema, { defaultValues: { email: "", name: "", password: "", username: "", sendPin: "", pin: "" } });
     const showButton = form.watch("email")?.length > 12 ? false : true;
 
-
     // NOTE hashing password
-    const hashPassword = async (plainPassword: string): Promise<string> => {
-        const salt = await bcrypt.genSalt(10); // 10 is a good balance
-        const hash = await bcrypt.hash(plainPassword, salt);
-        return hash;
-    };
 
-    // NOTE OTP send button
+
     const sendOTPButton = async () => {
-        const email = form.watch("email").trim();
-        if (!email) {
-            toast.error("Please enter a valid email address.");
+        const username = form.watch("username").trim();
+
+        // Validate username
+        const url = `/api/crud/users?where=${encodeURIComponent(JSON.stringify({ username: { $eq: username } }))}`;
+        const userData = await UtilityHandler.onSubmitGet<z.infer<typeof signUpFormSchema>[]>(url);
+        if (userData && userData.length > 0 && userData[0].username === username) {
+            form.setError('username', {
+                type: 'manual',
+                message: 'This username is already taken.'
+            });
             return;
         }
+
+        // Validate password
+        const password = form.watch('password');
+        if (!password || password.length < 6) {
+            form.setError('password', {
+                type: 'manual',
+                message: 'Password must be at least 6 characters long.'
+            });
+            return;
+        }
+
+        // Validate email
+        const email = form.watch("email").trim();
+        if (!email || !/\S+@\S+\.\S+/.test(email)) {
+            form.setError('email', {
+                type: 'manual',
+                message: 'Please enter a valid email address.'
+            });
+            return;
+        }
+
+        // Generate and set OTP
         const sendPin = OTPGeneratorUtil();
         form.setValue("sendPin", sendPin);
         setSendOTP(true);
-        const payload: OTPEmailProps = { name: form.getValues("name"), emailId: email, code: sendPin, task: "Sign Up" };
-        await UtilityHandler.onSubmitPost('/api/emails/otp', payload, `An OTP is being sent to ${email}. Please check your email.`, 'Please check your email for the OTP and enter it to proceed');
+
+        const payload: OTPEmailProps = {
+            name: form.getValues("name"),
+            emailId: email,
+            code: sendPin,
+            task: "Sign Up",
+        };
+
+        // Send OTP email
+        await UtilityHandler.onSubmitPost(
+            '/api/emails/otp',
+            payload,
+            `An OTP is being sent to ${email}. It will take a few seconds.`,
+            'Please check your email for the OTP and enter it to proceed'
+        );
     };
 
 
     // NOTE Signup submission button
     const handleSignUpSubmit = async (payload: z.infer<typeof signUpFormSchema>) => {
-        const { email, name, password, username } = payload;
+        const { email, name, password, username, pin, sendPin } = payload;
+        if (sendPin !== pin) {
+            toast.error("Invalid OTP. Please try again.");
+            return;
+        }
         const filterPayload = { name, username, email, password: await hashPassword(password) };
         await UtilityHandler.onSubmitPost(
             '/api/crud/users',
@@ -58,6 +97,7 @@ export function SignUpForm() {
             'Handling Sign-Up Form Submission',
             'You have successfully signed up. Try logging in now.'
         );
+        redirect(pageLinks.login);
     };
 
 
@@ -86,7 +126,7 @@ export function SignUpForm() {
                                 <Input
                                     required
                                     placeholder="Jardani Jovanovich (John Wick)"
-                                    type="email"
+                                    type="text"
                                     {...field} />
                             </FormControl>
                             <FormDescription>Enter your full name</FormDescription>

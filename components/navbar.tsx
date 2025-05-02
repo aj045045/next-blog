@@ -1,7 +1,7 @@
 "use client";
 import { NavigationMenu, NavigationMenuItem, NavigationMenuList } from "@/components/ui/navigation-menu";
 import Link from "next/link";
-import { LucideMenu } from "lucide-react";
+import { Bookmark, LucideMenu } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Drawer, DrawerClose, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger, } from "@/components/ui/drawer";
@@ -31,6 +31,7 @@ export function NavbarComp() {
     // NOTE User-specific links
     const userLinks = [
         { href: pageLinks.user.profile, label: "Profile", icon: <User size={18} /> },
+        { href: pageLinks.user.posts, label: "Bookmarks", icon: <Bookmark size={18} /> },
     ];
 
     // NOTE Admin-specific links
@@ -40,7 +41,7 @@ export function NavbarComp() {
 
     const navigationLinks = () => {
         return (
-            <div className="flex flex-col lg:flex-row items-center space-x-2">
+            <div className="flex flex-col lg:flex-row items-center md:space-x-2 space-y-5 lg:space-y-0">
                 {/* Public Links */}
                 {publicLinks.map((link) => (
                     <Link key={link.href} className={linkStyle} href={link.href}>
