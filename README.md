@@ -126,6 +126,7 @@ The project is built with the following technologies:
    - `npx create-next-app@latest .`
 2. **[Tailwind CSS](https://tailwindcss.com/)**: Utility-first CSS framework for styling.
    - `npm install lucide-react`
+   - `npm install tailwindcss-animate`
 3. **[Prisma SQLite](https://www.prisma.io/docs/orm/overview/databases/sqlite)**: ORM for database management
 
    - `npm install prisma --save-dev`

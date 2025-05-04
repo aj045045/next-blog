@@ -22,9 +22,8 @@ export const pageLinks = {
     user: {
         dashboard: '/u/dashboard',
         profile: '/u/profile',
-        posts: '/u/posts',
+        blogs: '/u/blogs',
         bookmarks: '/u/bookmarks',
-        settings: '/u/settings'
     },
 
 }

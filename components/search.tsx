@@ -1,14 +1,17 @@
 "use client"
-import { Calculator, Calendar, LucideSearch, } from "lucide-react"
+import { Bookmark, BookOpen, Calculator, Calendar, CreditCard, Home, Info, LayoutDashboardIcon, LucideSearch, Mail, Search, Settings, Tag, User, } from "lucide-react"
 import { CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, } from "@/components/ui/command"
 import { useEffect, useState } from "react"
+import { useSession } from "next-auth/react";
+import Link from "next/link";
+import { pageLinks } from "@/constant/page-links";
 
 /**
  * The SearchBar in Navigation Component
  */
 export function SearchBarComp() {
+    const { data: session } = useSession();
     const [open, setOpen] = useState(false)
-
     useEffect(() => {
         const down = (e: KeyboardEvent) => {
             if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
@@ -16,10 +19,29 @@ export function SearchBarComp() {
                 setOpen((open) => !open)
             }
         }
-
         document.addEventListener("keydown", down)
         return () => document.removeEventListener("keydown", down)
     }, [])
+
+
+    // NOTE Public links: accessible to all users
+    const publicLinks = [
+        { href: pageLinks.home, label: "Home", icon: <Home size={18} /> },
+        { href: pageLinks.search, label: "Search", icon: <Search size={18} /> },
+        { href: pageLinks.blog, label: "Blog", icon: <BookOpen size={18} /> },
+        { href: pageLinks.author, label: "Author", icon: <User size={18} /> },
+        { href: pageLinks.tag, label: "Tag", icon: <Tag size={18} /> },
+        { href: pageLinks.contact, label: "Contact", icon: <Mail size={18} /> },
+        { href: pageLinks.about, label: "About", icon: <Info size={18} /> },
+    ];
+
+    // NOTE User-specific links
+    const userLinks = [
+        { href: pageLinks.user.blogs, label: "Blogs", icon: <BookOpen size={18} /> },
+        { href: pageLinks.user.bookmarks, label: "Bookmarks", icon: <Bookmark size={18} /> },
+        { href: pageLinks.user.dashboard, label: "Dashboard", icon: <LayoutDashboardIcon size={18} /> },
+        { href: pageLinks.user.profile, label: "Profile", icon: <User size={18} /> },
+    ];
 
     return (
         <>
@@ -29,38 +51,36 @@ export function SearchBarComp() {
                     <span className="text-xs">⌘</span>K
                 </kbd>
             </div>
+
             <CommandDialog open={open} onOpenChange={setOpen} >
                 <CommandInput placeholder="Type a command or search..." />
                 <CommandList>
                     <CommandEmpty>No results found.</CommandEmpty>
+                    {/*NOTE The suggestion links */}
+                    {!session?.user.isAdmin &&
+                        <CommandGroup heading="User Settings">
+                            {userLinks.map((link, idx) => (
+                                <CommandItem key={idx} asChild>
+                                    <Link href={link.href} className="flex items-center gap-2">
+                                        {link.icon}
+                                        <span>{link.label}</span>
+                                    </Link>
+                                </CommandItem>
+                            ))}
+                        </CommandGroup>
+                    }
                     <CommandGroup heading="Suggestions">
-                        <CommandItem>
-                            <Calendar />
-                            <span>About us</span>
-                        </CommandItem>
-                        <CommandItem>
-                            <Calculator />
-                            <span>Contact</span>
-                        </CommandItem>
+                        {publicLinks.map((link, idx) => (
+                            <CommandItem key={idx} asChild>
+                                <Link href={link.href} className="flex items-center gap-2">
+                                    {link.icon}
+                                    <span>{link.label}</span>
+                                </Link>
+                            </CommandItem>
+                        ))}
                     </CommandGroup>
                     <CommandSeparator />
-                    {/* <CommandGroup heading="Settings">
-                        <CommandItem>
-                            <User />
-                            <span>Profile</span>
-                            <CommandShortcut>⌘P</CommandShortcut>
-                        </CommandItem>
-                        <CommandItem>
-                            <CreditCard />
-                            <span>Billing</span>
-                            <CommandShortcut>⌘B</CommandShortcut>
-                        </CommandItem>
-                        <CommandItem>
-                            <Settings />
-                            <span>Settings</span>
-                            <CommandShortcut>⌘S</CommandShortcut>
-                        </CommandItem>
-                    </CommandGroup> */}
+
                 </CommandList>
             </CommandDialog>
         </>

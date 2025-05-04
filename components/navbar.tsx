@@ -1,7 +1,7 @@
 "use client";
 import { NavigationMenu, NavigationMenuItem, NavigationMenuList } from "@/components/ui/navigation-menu";
 import Link from "next/link";
-import { Bookmark, LucideMenu } from "lucide-react";
+import { Bookmark, CircleEllipsis, LucideMenu } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Drawer, DrawerClose, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger, } from "@/components/ui/drawer";
@@ -10,17 +10,19 @@ import { assetsLinks } from "@/constant/assets-links";
 import { pageLinks } from "@/constant/page-links";
 import { signOut, useSession } from "next-auth/react";
 import { Home, Search, BookOpen, User, Tag, Mail, Info, LayoutDashboard } from 'lucide-react';
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
 
 export function NavbarComp() {
     const { data: session } = useSession();
-
-
     const linkStyle = "flex items-center gap-2 px-3 hover:border-b hover:border-b-green-500 hover:border-b-2 hover:py-1 hover:text-green-950 transition-all duration-200 ";
 
     // NOTE Public links: accessible to all users
     const publicLinks = [
         { href: pageLinks.home, label: "Home", icon: <Home size={18} /> },
         { href: pageLinks.search, label: "Search", icon: <Search size={18} /> },
+    ];
+
+    const extraPublicLinks = [
         { href: pageLinks.blog, label: "Blog", icon: <BookOpen size={18} /> },
         { href: pageLinks.author, label: "Author", icon: <User size={18} /> },
         { href: pageLinks.tag, label: "Tag", icon: <Tag size={18} /> },
@@ -30,8 +32,8 @@ export function NavbarComp() {
 
     // NOTE User-specific links
     const userLinks = [
-        { href: pageLinks.user.profile, label: "Profile", icon: <User size={18} /> },
-        { href: pageLinks.user.posts, label: "Bookmarks", icon: <Bookmark size={18} /> },
+        { href: pageLinks.user.dashboard, label: "Dashboard", icon: <LayoutDashboard size={18} /> },
+        { href: pageLinks.user.bookmarks, label: "Bookmarks", icon: <Bookmark size={18} /> },
     ];
 
     // NOTE Admin-specific links
@@ -49,6 +51,18 @@ export function NavbarComp() {
                         {link.label}
                     </Link>
                 ))}
+
+                <HoverCard>
+                    <HoverCardTrigger className={linkStyle}><CircleEllipsis size={18} />More</HoverCardTrigger>
+                    <HoverCardContent className="space-y-2 w-40">
+                        {extraPublicLinks.map((link) => (
+                            <Link key={link.href} className={linkStyle} href={link.href}>
+                                {link.icon}
+                                {link.label}
+                            </Link>
+                        ))}
+                    </HoverCardContent>
+                </HoverCard>
 
                 {/* Authenticated User/Admin Links */}
                 {session && (
