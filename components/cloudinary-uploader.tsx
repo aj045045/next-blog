@@ -35,15 +35,13 @@ export const CloudinaryUploader = ({ onUploadSuccess }: CloudinaryUploaderProps)
                 }}
                 className="transition ease-in-out delay-200"
             >
-                <div className="flex items-center justify-center w-full h-64 max-w-lg p-8 transition-all border-4 border-gray-400 border-dashed rounded-lg hover:text-blue-600 bg-gray-50 hover:bg-gray-100 hover:border-blue-600">
+                <div className="flex items-center group group-hover:bg-blue-400 justify-center w-full h-64 max-w-lg p-8 transition-all border-4 border-gray-400 border-dashed rounded-lg group-hover:text-blue-400 bg-gray-50 hover:bg-gray-100 hover:border-blue-600">
                     <div className="text-center">
-                        <Upload
-                            className="w-12 h-12 mx-auto mb-4 text-gray-600 transition-transform transform hover:scale-110"
-                        />
-                        <p className="text-lg font-medium text-gray-600">
+                        <Upload className="w-12 h-12 mx-auto mb-4 text-gray-600 transition-transform transform hover:scale-110  group-hover:text-blue-600" />
+                        <p className="text-lg font-medium text-gray-600  group-hover:text-blue-600">
                             Drag & drop an image here, or click to select one
                         </p>
-                        <p className="mt-2 text-sm text-gray-400">
+                        <p className="mt-2 text-sm text-gray-400  group-hover:text-blue-400">
                             PNG, JPG, JPEG up to 10MB
                         </p>
                     </div>

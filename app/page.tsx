@@ -1,5 +1,4 @@
 "use client"
-import { CloudinaryUploader } from "@/components/cloudinary-uploader";
 import { NavbarComp } from "@/components/navbar";
 import useSWR from "swr";
 

@@ -1,12 +1,5 @@
 import { toast } from 'sonner';
 
-/* The `interface FormResponse` in the provided TypeScript code snippet defines a structure for objects
-that represent responses from form submissions. It specifies that a `FormResponse` object should
-have two properties: */
-interface FormResponse {
-    status: string;
-    message: string;
-}
 
 /* The `UtilityHandler` class provides utility methods for handling POST, PUT, and DELETE requests with
 toast notifications in TypeScript. */
@@ -81,9 +74,9 @@ export class UtilityHandler {
                 },
                 body: JSON.stringify(data),
             });
-            const result: FormResponse = await response.json();
+            const result = await response.json();
             if (!response.ok) {
-                toast.error(result.message);
+                toast.error("Server error");
                 return;
             } else {
                 toast.success(successText);
@@ -131,10 +124,10 @@ export class UtilityHandler {
                 },
                 body: JSON.stringify(data),
             });
-            const result: FormResponse = await response.json();
+            const result = await response.json();
 
             if (!response.ok) {
-                toast.error(result.message);
+                toast.error("Server error");
                 return;
             } else {
                 toast.success(successText);
@@ -175,9 +168,12 @@ export class UtilityHandler {
                     'Content-Type': 'application/json',
                 },
             });
-            const result: FormResponse = await response.json();
+            const result = await response.json();
             if (!response.ok) {
-                toast.error(result.message);
+                toast.error("Server error");
+                const data = await result.json().catch(() => null);
+                console.log('Deleted successfully:', data);
+                toast.error('Deleted successfully:', data);
                 return;
             } else {
                 toast.success(successText);

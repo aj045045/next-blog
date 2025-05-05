@@ -98,7 +98,6 @@ model TagOnPost {
 model Image {
   id        Int      @id @default(autoincrement())
   imageId   String
-  altText   String?
   createdAt DateTime @default(now())
 
   posts Post[]

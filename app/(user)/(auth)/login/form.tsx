@@ -1,6 +1,6 @@
 "use client"
 import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod" // Install with: npm install @hookform/resolvers
+import { zodResolver } from "@hookform/resolvers/zod"
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
@@ -35,7 +35,7 @@ export function LoginForm() {
             if (updatedSession?.user.isAdmin) {
                 window.location.href = pageLinks.admin.dashboard;
             } else {
-                window.location.href = pageLinks.user.profile;
+                window.location.href = pageLinks.user.dashboard;
             }
         } else {
             toast.error(res.error);

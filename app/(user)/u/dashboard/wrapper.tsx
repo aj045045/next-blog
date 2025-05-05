@@ -99,23 +99,23 @@ export function DashboardWrapper() {
 
                 <TabsContent value="overview" className="space-y-6">
                     {/* Stats Cards */}
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <StatsCard
                             title="Posts"
                             value={data.stats.postsCount}
-                            icon={<FileText className="h-4 w-4" />}
+                            icon={<FileText className="h-6 w-6" />}
                             description="Published content"
                         />
                         <StatsCard
                             title="Comments"
                             value={data.stats.commentsCount}
-                            icon={<MessageSquare className="h-4 w-4" />}
+                            icon={<MessageSquare className="h-6 w-6" />}
                             description="User discussions"
                         />
                         <StatsCard
                             title="Reactions"
                             value={data.stats.reactionsCount}
-                            icon={<ThumbsUp className="h-4 w-4" />}
+                            icon={<ThumbsUp className="h-6 w-6" />}
                             description="Post interactions"
                         />
                     </div>
@@ -148,19 +148,19 @@ export function DashboardWrapper() {
                         <StatsCard
                             title="Tags"
                             value={data.stats.tagsCount}
-                            icon={<Tag className="h-4 w-4" />}
+                            icon={<Tag className="h-6 w-6" />}
                             description="Content categories"
                         />
                         <StatsCard
                             title="Images"
                             value={data.stats.imagesCount}
-                            icon={<ImageIcon className="h-4 w-4" />}
+                            icon={<ImageIcon className="h-6 w-6" />}
                             description="Media uploads"
                         />
                         <StatsCard
                             title="Bookmarks"
                             value={data.stats.bookmarksCount}
-                            icon={<Bookmark className="h-4 w-4" />}
+                            icon={<Bookmark className="h-6 w-6" />}
                             description="Saved content"
                         />
                     </div>
@@ -213,8 +213,7 @@ export function DashboardWrapper() {
                                         outerRadius={80}
                                         fill="#8884d8"
                                         dataKey="value"
-                                        label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                                    >
+                                        label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}>
                                         {tagsData.map((entry, index) => (
                                             <Cell key={`cell-${index}`} fill={entry.color} />
                                         ))}
@@ -244,8 +243,7 @@ export function DashboardWrapper() {
                                         label: "Negative",
                                         color: "hsl(var(--chart-2))",
                                     },
-                                }}
-                            >
+                                }}>
                                 <ResponsiveContainer width="100%" height="100%">
                                     <BarChart data={reactionsPerPostData}>
                                         <XAxis dataKey="name" tickLine={false} axisLine={false} />
@@ -271,8 +269,7 @@ export function DashboardWrapper() {
                                         label: "Bookmarks",
                                         color: "hsl(var(--chart-3))",
                                     },
-                                }}
-                            >
+                                }}>
                                 <ResponsiveContainer width="100%" height="100%">
                                     <BarChart data={bookmarksData} layout="vertical">
                                         <XAxis type="number" />
